@@ -1,0 +1,55 @@
+#sourcePNG.fade {
+    -webkit-animation: fadeout 0.5s;
+    animation: fadeout 0.5s;
+}
+
+#sourcePNG {
+  max-width: 100%;
+  //margin-left: -150px;
+  //margin-top: -100px;
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 55px; opacity: 1;}
+    to {bottom: 55px; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 55px; opacity: 1;}
+    to {bottom: 55px; opacity: 0;}
+}
+
+
+#textContainer {
+  visibility: hidden;
+  color: white;
+  font-size: 35px;
+  position: absolute;
+  top: 275px;
+  left: 200px;
+  width: 400px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#text {
+  text-align: center;
+}
+
+
+#text.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+   animation: fadein 0.5s, fadeout 0.5s 9.5s;
+}
+
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //position: relative;
+  width: 801px;
+  height: 601px;
+}

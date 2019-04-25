@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Raxa.Dev</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div id="container">
+          <img id="sourcePNG" src="Untitled.png"/>
+        <div id="textContainer">
+            <p id="text">test message in div</p>
+        </div>
+    </div>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+if(!!window.EventSource){
+var evt = {
+  init : function(){
+    var src = new EventSource("/api/events");
+    src.addEventListener("message", function(event){
+                                console.log(`message incoming: ${event.data}`);
+                                var data = JSON.parse(event.data);
+                                console.log(data.update);
+                                console.log(data.number);
+                                evt.startAnim(`${data.update}:${data.number}`);
+                             }, false);
+                             src.addEventListener("open", function(event){
+                               //console.log("Connected client");
+                              // evt.startAnim("Connected");
+                             }, false);
+                     },
+
+                     startAnim : function(data) {
+                       //start up gif background
+                       setTimeout(function(){
+                         var gif = document.getElementById("sourcePNG");
+                         gif.src = "Spoopathon2.gif";
+                         setTimeout(function(){
+                           gif.src = "spoopL.png";
+                         },2000);
+                         setTimeout(function(){
+                           gif.className = "fade";
+                         }, 8000);
+                         setTimeout(function(){
+                           gif.src = "Untitled.png";
+                         }, 8500);
+                         setTimeout(function(){
+                           gif.className = "";
+                         }, 11000);
+                       }, 1000);
+
+                       //start up the text animation after 5 seconds
+                       setTimeout(function(){
+                         var txt = document.getElementById("text");
+                         txt.innerHTML = data;
+                         txt.className = "show";
+                         setTimeout(function(){
+                           txt.className = txt.className.replace("show", "");
+                         }, 4000);
+                       }, 3000);
+                     }
+            };
+
+            $(document).ready(function(){
+                    evt.init();
+            });
+          } else {
+            console.log("Browser does not support SSE");
+          }
+</script>
+<style type="text/css">
+
+</style>
+  </body>
+</html>

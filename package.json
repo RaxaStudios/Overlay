@@ -1,0 +1,31 @@
+{
+  "name": "webserver",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "11.12.0"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-queue": "^3.8.10",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "events": "^3.0.0",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "mustache-express": "^1.2.8",
+    "redis": "^2.8.0",
+    "request": "^2.88.0",
+    "webpack": "^4.30.0",
+    "ws": "^6.2.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.1"
+  }
+}
