@@ -24,7 +24,7 @@ setInterval(function(){
     console.log(err);
     console.log(result);
   });
-}, 30000);
+}, 31000);
 setInterval(function(){
   q.push(array.pop(), function(err, result){
   });

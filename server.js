@@ -32,20 +32,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-function initialiseSSE(req, res) {
-  let messageId = 0;
-
-  const intervalId = setInterval(() => {
-    res.write(`id: ${messageId}\n`);
-    res.write(`data: Test Message -- ${Date.now()}\n\n`);
-    messageId += 1;
-  }, 1000);
-
-  req.on("close", () => {
-    clearInterval(intervalId);
-  });
-}
-
 app.get("/event-stream", (req, res) => {
   // SSE Setup
   res.writeHead(200, {
@@ -54,19 +40,25 @@ app.get("/event-stream", (req, res) => {
     Connection: "keep-alive"
   });
   res.write("\n");
-
   initialiseSSE(req, res);
 });
 
+function initialiseSSE(req, res) {
+  setInterval(function(){
+    sub.emit("push", "message", { msg: "message intervalled" });
+  }, 10000);
+  req.on("close", () => {
+    console.log("request closed");
+  });
+}
+
 app.get("/", function(req, res) {
   res.render("index");
+  sub.on("push", function(event, data){
+    console.log("data: " + data + "\n\n");
+  });
 });
 
-/*test interval to send to browser
-setInterval(function(){
-  sub.emit("push", "message", { msg: "message 1" });
-}, 5000);
-*/
 app.listen(8080, function() {
   console.log("sse app listening on port 8080!");
 });

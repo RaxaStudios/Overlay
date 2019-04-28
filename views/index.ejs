@@ -20,15 +20,17 @@
     </div>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script>
-      if (!!window.EventSource) {
-        var evt = {
-          init: function() {
-            var es = new EventSource("/event-stream");
+
+            const es = new EventSource("/event-stream");
 
             const listener = function(event) {
               const type = event.type;
 
               window.console.log(`${type}: ${event.data || es.url}`);
+              //var data = JSON.parse(event.data);
+              //console.log(data.update);
+              //console.log(data.number);
+              startAnim(event.data);
 
               if (type === "result") {
                 es.close();
@@ -39,9 +41,9 @@
             es.addEventListener("message", listener);
             es.addEventListener("error", listener);
             es.addEventListener("result", listener);
-          },
 
-          startAnim: function(data) {
+
+          function startAnim(data) {
             //start up gif background
             setTimeout(function() {
               var gif = document.getElementById("sourcePNG");
@@ -69,15 +71,7 @@
                 txt.className = txt.className.replace("show", "");
               }, 4000);
             }, 3000);
-          }
-        };
-
-        $(document).ready(function() {
-          evt.init();
-        });
-      } else {
-        console.log("Browser does not support SSE");
-      }
+          };
     </script>
     <style type="text/css"></style>
   </body>
