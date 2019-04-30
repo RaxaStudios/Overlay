@@ -15,7 +15,7 @@
     <div id="container">
       <img id="sourcePNG" src="Untitled.png" />
       <div id="textContainer">
-        <p id="text">test message in div</p>
+        <p id="text"></p>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -26,20 +26,52 @@
         const type = event.type;
 
         console.log(`${type}: ${event.data || es.url}`);
+        if(type === "message"){
+        startAnim(`${event.data}`);
+
+        function startAnim(data) {
+        //start up gif background
+        setTimeout(function(){
+            var gif = document.getElementById("sourcePNG");
+            gif.src = "Spoopathon2.gif";
+        setTimeout(function(){
+            gif.src = "spoopL.png";
+          },2000);
+        setTimeout(function(){
+            gif.className = "fade";
+        }, 8000);
+        setTimeout(function(){
+            gif.src = "Untitled.png";
+        }, 8500);
+        setTimeout(function(){
+            gif.className = "";
+          }, 11000);
+        }, 1000);
+        //start up the text animation after 5 seconds
+        setTimeout(function(){
+            var txt = document.getElementById("text");
+            txt.innerHTML = data;
+            txt.className = "show";
+        setTimeout(function(){
+            txt.className = txt.className.replace("show", "");
+          }, 4000);
+        }, 3000);
 
         if (type === "result") {
           es.close();
         }
       };
+      }
+    }
 
       es.addEventListener("open", listener);
       es.addEventListener("message", listener);
       es.addEventListener("error", listener);
       es.addEventListener("result", listener);
 
-      setTimeout(function() {
+    /*  setTimeout(function() {
         es.close();
-      }, 10000);
+      }, 20000);*/
     </script>
     <style type="text/css"></style>
   </body>

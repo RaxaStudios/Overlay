@@ -1,21 +1,29 @@
 const express = require("express");
 const app = express();
+const firebase = require("firebase");
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+  // Initialize Firebase
+var config = {
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: ""
+};
+firebase.initializeApp(config);
+
+
 function initialiseSSE(req, res) {
-  let messageId = 0;
+  var dataRef = firebase.database().ref("/").child("events");
 
-  const intervalId = setInterval(() => {
-    res.write(`id: ${messageId}\n`);
-    res.write(`data: Test Message -- ${Date.now()}\n\n`);
-    messageId += 1;
-  }, 1000);
-
-  req.on("close", () => {
-    clearInterval(intervalId);
+  const fire = dataRef.on("value", function(snapshot) {
+    console.log(`firebase values: ${snapshot.val().key}`);
+    res.write(`data: ${snapshot.val().key}\n\n`);
   });
 }
 
